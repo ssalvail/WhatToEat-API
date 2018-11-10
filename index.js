@@ -1,8 +1,11 @@
 // load app server using express
 const express = require('express');
+const cors = require('cors');
 const app = express();
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
+
+app.use(cors());
 
 // router
 const router = require('./routes/suggestion.js');

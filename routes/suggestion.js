@@ -1,10 +1,16 @@
 // will contain all user related routes
 const express = require('express');
+const cors = require('cors');
 const mysql = require('mysql');
 const router = express.Router();
 
+var corsOptions = {
+    origin: 'http://localhost:3000/',
+    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}
+
 // returns a random suggestion from the database
-router.get("/get_suggestion", (req, res) => {
+router.get("/get_suggestion", cors(corsOptions), (req, res) => {
     const connection = getConnection();
 
     const queryString = "SELECT * FROM suggestions ORDER BY RAND() LIMIT 1";
@@ -21,7 +27,7 @@ router.get("/get_suggestion", (req, res) => {
 });
 
 // adds a suggestion to the database
-router.post('/create_suggestion', (req, res) => {
+router.post('/create_suggestion', cors(corsOptions), (req, res) => {
     console.log("Creating new suggestion...");
 
     const name = req.body.name;
