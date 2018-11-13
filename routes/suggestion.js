@@ -12,8 +12,13 @@ var corsOptions = {
 // returns a random suggestion from the database
 router.get("/get_suggestion", cors(corsOptions), (req, res) => {
     const connection = getConnection();
+    let queryString;
+    if (req.query.type === "restaurant") {
+        queryString = "SELECT * FROM suggestions WHERE type = 'restaurant' ORDER BY RAND() LIMIT 1";
+    } else {
+        queryString = "SELECT * FROM suggestions WHERE type = 'bar' ORDER BY RAND() LIMIT 1";
+    }
 
-    const queryString = "SELECT * FROM suggestions ORDER BY RAND() LIMIT 1";
     connection.query(queryString, (err, row, fields) => {
         if (err) {
             console.log("Failed to query for suggestion: " + err);
