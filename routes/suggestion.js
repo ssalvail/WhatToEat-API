@@ -53,7 +53,9 @@ router.post('/create_suggestion', cors(corsOptions), (req, res) => {
             return;
         }
         console.log("Inserted a new suggestion with id: ", results.insertId);
-        res.end();
+        res.json({
+            'message': 'New suggestion saved!'
+        });
     });
 });
 
