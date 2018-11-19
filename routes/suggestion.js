@@ -4,9 +4,15 @@ const cors = require('cors');
 const mysql = require('mysql');
 const router = express.Router();
 
+var whitelist = ['http://localhost:3000', 'https://zen-einstein-79908b.netlify.com']
 var corsOptions = {
-    origin: 'http://localhost:3000',
-    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  }
 }
 
 // returns a random suggestion from the database
